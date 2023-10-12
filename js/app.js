@@ -84,11 +84,11 @@ function checkSubmit(e) {
     const level = document.querySelector("input[name='level']:checked").value
 
     // check form validity
-    validaition(make, year, level)
+    calculatePrice(make, year, level)
 }
 
 // checking form
-function validaition(make, year, level) {
+function inputValidaition(make, year, level) {
     if (make === "" || year === "" || level === "") {
         displayError("لطفا فرم را کامل پر کنید")
     } else {
@@ -119,7 +119,7 @@ function insuranceCase(inCarMake, inYear, inLevel) {
     let info = {
         carMake: inCarMake,
         carYear: inYear,
-        level: inLevel
+        carlevel: inLevel
     }
     calculatePrice(info)
 }
@@ -130,12 +130,12 @@ function calculatePrice(info) {
         base = 2000000
 
     // price
-    price = CalculateCar(price, base, info) - ((diffrence(info) * 3) / 100) * CalculateCar(price, base, info)
+    price = calculatePrice(price, base, info) - ((diffrence(info) * 3) / 100) * calculatePrice(price, base, info)
     console.log(price);
 }
 
 // price of car
-function CalculateCar(price, base, info) {
+function calculatePrice(price, base, info) {
     // + Calculate Make 
     /* 
     make:1      =>      1.15
