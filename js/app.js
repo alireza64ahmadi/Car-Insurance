@@ -161,6 +161,6 @@ function CalculateCar(price, base, info) {
 // price of year
 function diffrence(info) {
     let year = info.carYear
-    year = maxYear() - year
+    year = maxYear() - year;
     return year
 }
