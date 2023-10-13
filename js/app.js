@@ -59,44 +59,32 @@ function calculatePrice(info) {
             price = base * 1.80
             break;
     }
-
+    
+    const year = info.year
 
 
     // + Calculate Year
     // get the year
-    const year = info.year
-    // diffrence = getYearDiffrence(year)
-    const diffrence = function (year) {
-        // Convert to number
-        let
-            persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
-            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
-            fixNumbers = function (str) {
-                if (typeof str === 'string') {
-                    for (var i = 0; i < 10; i++) {
-                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
-                    }
-                }
-                return parseInt(str);
-            };
 
-        // get max year
-        const now = new Date().toLocaleDateString('fa-IR')
-        let nowYear = now.slice(0, 4)
-        let max = fixNumbers(nowYear)
-        year = max - year
-
-        return year
-    }
     // 3% cheaper for each year
-    price = price - ((diffrence(year) * 3) / 100) * price
-
+    price = price - ((findYear(year) * 3) / 100) * price
     console.log(price);
 
 
     // + get the level
     const level = info.level
     price = calculateLevel(level , price)
+}
+// find now year 
+function findYear(year){
+    
+
+    // get max year
+    const now = new Date().toLocaleDateString('fa-IR')
+    let nowYear = now.slice(0, 4)
+    let max = fixNumbers(nowYear)
+    year = max - year
+    return year
 }
 
 function calculateLevel(level , price){
@@ -136,18 +124,7 @@ function displayMsg(msg) {
 // Show Years
 function displayYears() {
     // Convert to number
-    let
-        persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
-        arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
-        fixNumbers = function (str = "") {
-            if (typeof str === 'string') {
-                for (var i = 0; i < 10; i++) {
-                    str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
-                }
-            }
-            return parseInt(str);
-        };
-
+ 
     // get now years
     let curentYear = new Date().toLocaleDateString('fa-IR')
 
@@ -182,6 +159,3 @@ function displayYears() {
         selectYear.appendChild(optionTag)
     }
 }
-
-
-
