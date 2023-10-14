@@ -123,7 +123,7 @@ function displayMsg(msg) {
 // Show Years
 function displayYears() {
     // Convert to number
-    fixNumbers(str)
+    fixNumbers();
     // get now years
     let curentYear = new Date().toLocaleDateString('fa-IR')
 
@@ -158,7 +158,7 @@ function displayYears() {
         selectYear.appendChild(optionTag)
     }
 }
-//make the persian nuber to english with this function
+//make the persian number to english with this function
 function fixNumbers(str){
     let
     persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
