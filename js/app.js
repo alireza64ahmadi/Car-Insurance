@@ -8,6 +8,7 @@ document.addEventListener('submit', submitForm)
 
 
 // Functions
+// afterLoad : this function will load after you reload the page
 function afterLoad() {
     displayYears()
 }
@@ -15,29 +16,35 @@ function afterLoad() {
 function submitForm(e) {
     e.preventDefault();
 
-    // read value from the form
-    const make = document.querySelector('#make').value
-    const year = document.querySelector('#year').value
-    const level = document.querySelector('input[name="level"]:checked').value
-
-    // check the value of fileds are correct
-    if (make === "" || year === "" || level === "") {
-        displayMsg('لطفاً مقادیر فرم را با دقت پر نمایید. با تشکر')
-    } else {
-        // STEP1: get info
-        let insuranceCase = {
-            make: make,
-            year: year,
-            level: level
-        }
-
-        // STEP2: calculate
-        calculatePrice(insuranceCase)
-
-        // STEP3: show result message box
-    }
+    // validation form function
+    validationForm()
+   
 }
-
+// function for validation : when you click on submit button it will be red if the inputs wouldn't empty
+function validationForm(){
+     // read value from the form
+     const make = document.querySelector('#make').value
+     const year = document.querySelector('#year').value
+     const level = document.querySelector('input[name="level"]:checked').value
+ 
+     // check the value of fileds are correct
+     if (make === "" || year === "" || level === "") {
+         displayMsg('لطفاً مقادیر فرم را با دقت پر نمایید. با تشکر')
+     } else {
+         // STEP1: get info
+         let insuranceCase = {
+             make: make,
+             year: year,
+             level: level
+         }
+ 
+         // STEP2: calculate
+         calculatePrice(insuranceCase)
+ 
+         // STEP3: show result message box
+     }
+}
+// calculatePrice : calculate the insurance price whenever you choose the year and insurance type
 function calculatePrice(info) {
     let price = 0, base = 2000000
 
@@ -75,18 +82,19 @@ function calculatePrice(info) {
     const level = info.level
     price = calculateLevel(level , price)
 }
-// find now year 
+// findYear : it will find the now year in this function  
 function findYear(year){
     
 
     // get max year
     const now = new Date().toLocaleDateString('fa-IR')
+    // slice the date to just year example : 2006 / 1402
     let nowYear = now.slice(0, 4)
     let max = fixNumbers(nowYear)
     year = max - year
     return year
 }
-
+// calculateLevel : it will calculate the level of the insurance by choosing the right one
 function calculateLevel(level , price){
     /*
         basic   =>  increase 30%
@@ -104,7 +112,10 @@ function calculateLevel(level , price){
 
 
 // User Interface (UI) Functions
+
+
 // Display message box
+// displayMsg : it will show the error text when you put the input empty 
 function displayMsg(msg) {
     // create message box
     const messageBox = document.createElement('div');
@@ -124,39 +135,12 @@ function displayMsg(msg) {
 function displayYears() {
     // Convert to number
     fixNumbers();
-    // get now years
-    let curentYear = new Date().toLocaleDateString('fa-IR')
 
-    // Slice date
-    curentYear = curentYear.slice(0, 4)
 
-    // get max year
-    let maxYear = fixNumbers(curentYear)
-
-    // get min year
-    let minYear = maxYear - 20
-
-    // access to the select tag
-    const selectYear = document.querySelector('#year')
-
-    // create first option tag for title
-    // create option tag
-    const optionTag = document.createElement('option')
-    optionTag.innerText = `- انتخاب -`;
-    // optionTag.value = ''
-    // append option to the selectYear
-    selectYear.appendChild(optionTag)
-
+    //  show the default text to the form 
+    defaultText()
     // create for loop for making option tag
-    for (let i = maxYear; i >= minYear; i--) {
-        // create option tag
-        const optionTag = document.createElement('option')
-        optionTag.value = i;
-        optionTag.innerText = `سال ${i}`;
-
-        // append option to the selectYear
-        selectYear.appendChild(optionTag)
-    }
+    makeOption()
 }
 //make the persian number to english with this function
 function fixNumbers(str){
@@ -170,4 +154,42 @@ function fixNumbers(str){
             }
         }
         return parseInt(str);
+    }
+//makeOption : it will make the option tag for you to choose your car year 
+function makeOption(){
+    // get now years
+    let curentYear = new Date().toLocaleDateString('fa-IR')
+
+    // Slice date
+    curentYear = curentYear.slice(0, 4)
+    
+    // get max year
+    let maxYear = fixNumbers(curentYear)
+    
+    // get min year
+    let minYear = maxYear - 20  
+    // create for loop for making option tag
+    for (let i = maxYear; i >= minYear; i--) {
+        // create option tag
+        const optionTag = document.createElement('option')
+        optionTag.value = i;
+        optionTag.innerText = `سال ${i}`;
+        const selectYear = document.querySelector('#year')
+        // append option to the selectYear
+        selectYear.appendChild(optionTag)
+    }
+}
+
+
+// defaultText : it will show you the default text for year form input 
+function defaultText(){
+        // access to the select tag
+        const selectYear = document.querySelector('#year')
+        // create first option tag for title
+        // create option tag
+        const optionTag = document.createElement('option')
+        optionTag.innerText = `- انتخاب -`;
+        optionTag.value = ''
+    // append option to the selectYear
+    selectYear.appendChild(optionTag)
 }
