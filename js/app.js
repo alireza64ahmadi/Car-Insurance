@@ -31,18 +31,22 @@ function validationForm(){
      if (make === "" || year === "" || level === "") {
          displayMsg('لطفاً مقادیر فرم را با دقت پر نمایید. با تشکر')
      } else {
-         // STEP1: get info
-         let insuranceCase = {
-             make: make,
-             year: year,
-             level: level
-         }
- 
-         // STEP2: calculate
-         calculatePrice(insuranceCase)
- 
-         // STEP3: show result message box
+        getInformation()
      }
+}
+// getINformation : This function will give information 
+function getInformation(){
+       // STEP1: get info
+       let insuranceCase = {
+        make: make,
+        year: year,
+        level: level
+    }
+
+    // STEP2: calculate
+    calculatePrice(insuranceCase)
+
+   
 }
 // calculatePrice : calculate the insurance price whenever you choose the year and insurance type
 function calculatePrice(info) {
