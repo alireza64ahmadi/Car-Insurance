@@ -5,6 +5,9 @@ const form = document.querySelector('#request-quote')
 // Events
 document.addEventListener('DOMContentLoaded', afterLoad)
 document.addEventListener('submit', submitForm)
+const make = document.querySelector('#make').value
+const year = document.querySelector('#year').value
+const level = document.querySelector('input[name="level"]:checked').value
 
 
 // Functions
@@ -23,9 +26,6 @@ function submitForm(e) {
 // function for validation : when you click on submit button it will be red if the inputs wouldn't empty
 function validationForm(){
      // read value from the form
-     const make = document.querySelector('#make').value
-     const year = document.querySelector('#year').value
-     const level = document.querySelector('input[name="level"]:checked').value
  
      // check the value of fileds are correct
      if (make === "" || year === "" || level === "") {
