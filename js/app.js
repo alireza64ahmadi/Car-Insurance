@@ -1,13 +1,20 @@
 // Variables
 const form = document.querySelector('#request-quote')
+const config = {
+    base : 2000000,
+    price :0,
+    pride: 1.15,
+    optima:1.30,
+    porsche : 1.80,
+    basic : 1.3,
+    complete : 1.5
+
+}
 
 
 // Events
 document.addEventListener('DOMContentLoaded', afterLoad)
 document.addEventListener('submit', submitForm)
-const make = document.querySelector('#make').value
-const year = document.querySelector('#year').value
-const level = document.querySelector('input[name="level"]:checked').value
 
 
 // Functions
@@ -18,39 +25,48 @@ function afterLoad() {
 // submit form
 function submitForm(e) {
     e.preventDefault();
-
+    
     // validation form function
-    validationForm()
+    
+    const make = document.querySelector('#make').value
+    const year = document.querySelector('#year').value
+    const level = document.querySelector('input[name="level"]:checked').value
+
+    validationForm(make, year, level)
+        
    
 }
 // function for validation : when you click on submit button it will be red if the inputs wouldn't empty
-function validationForm(){
+function validationForm(make, year, level){
      // read value from the form
  
-     // check the value of fileds are correct
-     if (make === "" || year === "" || level === "") {
+     // check the value of fields are correct
+     if (make === '' || year === ''|| level === '' ) {
          displayMsg('لطفاً مقادیر فرم را با دقت پر نمایید. با تشکر')
      } else {
-        getInformation()
+       
+        insuranceCase(make , year , level)
      }
 }
+
 // getINformation : This function will give information 
-function getInformation(){
+function insuranceCase(make , year , level){
        // STEP1: get info
-       let insuranceCase = {
+       
+       let info = {
         make: make,
         year: year,
         level: level
     }
 
     // STEP2: calculate
-    calculatePrice(insuranceCase)
+    calculatePrice(info)
 
    
 }
 // calculatePrice : calculate the insurance price whenever you choose the year and insurance type
 function calculatePrice(info) {
-    let price = 0, base = 2000000
+    let price = config.price, base = config.base
 
     // + Calculate Make 
     /* 
@@ -61,13 +77,13 @@ function calculatePrice(info) {
     const make = info.make
     switch (make) {
         case "1":
-            price = base * 1.15
+            price = base * config.pride
             break;
         case "2":
-            price = base * 1.30
+            price = base * config.optima
             break;
         case "3":
-            price = base * 1.80
+            price = base * config.porsche
             break;
     }
     
@@ -106,9 +122,9 @@ function calculateLevel(level , price){
     */
 
     if (level == 'basic'){
-        price = price * 1.3
+        price = price * config.base
     }else{
-        price = price * 1.5
+        price = price * config.complete
     }
 
     return price
@@ -197,3 +213,10 @@ function defaultText(){
     // append option to the selectYear
     selectYear.appendChild(optionTag)
 }
+// display factor to the form 
+// param {price }[number]:final price
+// param {info}[obj]: factor information 
+// return information : factor price
+// function showFactor(price,info){
+    
+// }
